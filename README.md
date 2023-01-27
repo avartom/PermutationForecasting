@@ -1,4 +1,4 @@
-# Permutation Forecasting
+
 # Permutation Forecasting
 
 Given a time series data, we forecast using permutations. More specifically, we take a window of size $$n$$, and then sort the values from $$0$$ to $$n-1$$ in ascending order. In other words, if $$\{X_n\}_{n\in N}$$ is a time series we take a window of size $$n$$ then  $$\{X_0, X_1, \cdots X_{n-1}\}$$ and consider it as a permutation of the of the set  $$S_{n}$$ which is  set $$\{0,1,2 \cdots n-1\}$$. But this amounts to a bijective function $$\sigma : S_{n} \to S_{n}$$ where $$S_{n}$$ is the set $$\{0,1,2 \cdots n-1\}$$. For example, if $$(X_{0}=5, X_{1}=1, X_{2}=10)$$ then after sorting the above time series with window of size $$n=3$$ becomes $$(X_{1},X_{0},X_{2})$$. Therefore, $$\sigma: (0,1,2)\to (1,0,2)$$. 
