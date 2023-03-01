@@ -6,3 +6,5 @@ Now, if we take $X_{2}$ to be the future value we are trying to  predict based o
 
 
 Our algorithm traverses through the time series data with window size of $n$ and looks for the index of the target random variable $X_{n-1}$ (in this case it is $2$ starting from $0$) and either gives an upper bound or a lower bound for the variable $X_{n-1}$ (that which we are trying to predict). We can turn our target variable into a binary random variable by stipulating $X_{n-1}$ to be $0$, if $X_{n-1} < t$ and $X_{n-1}$ to be $1$, if $X_{n-1} > t$ where $t\in { 0,1,2\dots,n-1 }$ again where $n$ is the window size. 
+The above was motivated by the following article:
+[Permutation_Entropy_Pompe.pdf](https://github.com/avartom/PermutationForecasting/files/10858144/Permutation_Entropy_Pompe.pdf)
