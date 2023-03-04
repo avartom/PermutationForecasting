@@ -1,15 +1,73 @@
 import numpy as np
 import pandas as pd
 class PermutationForecaster(object):
+  """A class to preprocess time series data for prediction.
+  Attributes
+  ----------
+  series: pd.Series
+      Series representing time series data
+
+  Methods
+  ----------
+  getIndex(int n)
+
+  validArray(window_size=5)
+
+  sorter(window_size=5)
+
+  indexer(window_size=5)
+
+  targetFinder(window_size=5)
+
+  targetDeleter(window_size=5)
+
+  bin_maker(window_size=5, threshold=3)
+
+  """
   def __init__(self, ser):
     self.series = pd.Series(ser)
+    """
+    Constructs the attributes to represent a time series.
+    
+    parameters
+    ----------
+    series: pd.Series
+    """
   def getIndex(self, n):
+    """
+        Selects the element of the series corresponding to index n,
+        if n is less than the length of the series. Otherwise, the user
+        is prompted that the index n is greater than the length of the
+        series.
+
+        parameters
+        ----------
+        n: int
+
+        Returns
+        -------
+        The element of the series corresponding to the index n.
+        """
     len_ser = len(self.series)
-    if n <= len_ser:
+    if n < len_ser:
       return self.series[n]
     else:
       print("The index exceeds the length of the series")
   def validArray(self, window_size=5):
+    """
+            Selects the element of the series corresponding to index n,
+            if n is less than the length of the series. Otherwise, the user
+            is prompted that the index n is greater than the length of the
+            series.
+
+            parameters
+            ----------
+            n: int
+
+            Returns
+            -------
+            The element of the series corresponding to the index n.
+            """
     return len(self.series) >= 10 * window_size
   def sorter(self, window_size=5):
     sorted_list = []
@@ -29,16 +87,7 @@ class PermutationForecaster(object):
       arr1 = arr - ind
       ind_list.append(arr1)
     return ind_list
-  # def indexer(self, window_size=5):
-  #   ind_list = []
-  #   arr = self.sorter(window_size)  #gives an array of sorted arrays of length window size
-  #   length_arr = len(arr)
-  #   for ind in range(length_arr):
-  #     ar = np.where(arr[ind] > 0)
-  #     #ind1 = np.array([ind]*window_size)
-  #     #arr1 = ar - ind1
-  #     ind_list.append(ar)
-  #   return ind_list
+
   def targetFinder(self, window_size=5):
     target_list = []
     target = window_size - 1
