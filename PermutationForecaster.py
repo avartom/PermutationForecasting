@@ -1,54 +1,75 @@
-import pandas as pd
 import numpy as np
-class PermutationForecaster(pd.Series):
-  def __init__(self, series, window_size):
-    series = pd.Series(series)
-    self.series = series
-    self.window_size = window_size
-    super().__init__(series)
-
-  def ValidSeries(self):
-    return len(self.series) >= 10 * self.window_size
-  def Sorter(self):
+import pandas as pd
+class PermutationForecaster(object):
+  def __init__(self, ser):
+    self.series = pd.Series(ser)
+  def getIndex(self, n):
+    len_ser = len(self.series)
+    if n <= len_ser:
+      return self.series[n]
+    else:
+      print("The index exceeds the length of the series")
+  def validArray(self, window_size=5):
+    return len(self.series) >= 10 * window_size
+  def sorter(self, window_size=5):
     sorted_list = []
-    n  = self.window_size
-    length_series = len(self.series)
-    if self.ValidSeries():
-      for index in range(length_series - n):
-        sorted = self.series[index:index+n].sort_values()
-        sorted_list.append(sorted)
-    return sorted_list
-
-
-  def Indexer(self):
+    length_arr = len(self.series)
+    if self.validArray(window_size):
+      for index in range(length_arr - window_size):
+        b = self.series[index:index + window_size].sort_values()
+        sorted_list.append(b)
+    return pd.Series(sorted_list)
+  # def invIndex(self, a):
+  #   return np.where(self.arr == a)
+  def indexer(self, window_size=5):
     ind_list = []
-    series = self.Sorter()
+    series = self.sorter(window_size)
     for ind in range(len(series)):
       arr = np.array(series[ind].index)
       arr1 = arr - ind
       ind_list.append(arr1)
     return ind_list
-  def TargetFinder(self):
-    target = self.window_size - 1
-    ind = self.Indexer()
-    for i in ind:
-      for j in i:
-        if i[j] == target:
-          return j
-  def TargetDeleter(self):
-    target = self.window_size - 1
-    ind_list = self.Indexer()
-    for i in ind_list:
-      i.pop(target)
-    return ind_list
+  # def indexer(self, window_size=5):
+  #   ind_list = []
+  #   arr = self.sorter(window_size)  #gives an array of sorted arrays of length window size
+  #   length_arr = len(arr)
+  #   for ind in range(length_arr):
+  #     ar = np.where(arr[ind] > 0)
+  #     #ind1 = np.array([ind]*window_size)
+  #     #arr1 = ar - ind1
+  #     ind_list.append(ar)
+  #   return ind_list
+  def targetFinder(self, window_size=5):
+    target_list = []
+    target = window_size - 1
+    index_array = self.indexer(window_size)
+    #length_arr = len(index_array)
+    for arr in index_array:
+      for i in range(window_size):
+        if arr[i] == target:
+          target_list.append(i)
+    return pd.Series(target_list)
 
-  def bin_maker(self, threshold):
-    target_ind = TargetFinder()
-    threshold = self.window_size//2
-    if target_ind <= threshold:
-      return 0
-    else:
-      return 1
+
+  def targetDeleter(self, window_size=5):
+    target = window_size - 1
+    ind_list = self.indexer(window_size)
+    ind_list1 = []
+    for i in ind_list:
+      i = np.delete(i, np.where(i == target))
+      ind_list1.append(i)
+    return ind_list1
+
+  def bin_maker(self, window_size=5, threshold=3):
+    bin_lst = []
+    target_ind = self.targetFinder(window_size)
+    for  x in target_ind:
+      if x <= threshold:
+        bin_lst.append(0)
+      else:
+        bin_lst.append(1)
+    return bin_lst
+
 # clean_df = pd.DataFrame({"Sorted":df_sorted_ind})
 # clean_df["target"] = clean_df["Sorted"].apply(index_finder)
 # clean_df["target"] = clean_df["target"].apply(bin_maker)
