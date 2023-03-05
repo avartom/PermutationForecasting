@@ -181,24 +181,3 @@ class PermutationForecaster(object):
       else:
         bin_lst.append(1)
     return bin_lst
-
-# clean_df = pd.DataFrame({"Sorted":df_sorted_ind})
-# clean_df["target"] = clean_df["Sorted"].apply(index_finder)
-# clean_df["target"] = clean_df["target"].apply(bin_maker)
-# clean_df["Sorted"] = clean_df["Sorted"].apply(index_deleter)
-#
-# clean_df["Sprice0"] = clean_df.Sorted.apply(lambda col: col[0])
-# clean_df["Sprice1"] = clean_df.Sorted.apply(lambda col: col[1])
-# clean_df["Sprice2"] = clean_df.Sorted.apply(lambda col: col[2])
-# clean_df["Sprice3"] = clean_df.Sorted.apply(lambda col: col[3])
-# clean_df["Sprice4"] = clean_df.Sorted.apply(lambda col: col[4])
-#
-# clean_df.target.value_counts(normalize=True)
-#
-#
-# def train_test(n, df=clean_df, test_size=10):
-#   X_train = clean_df[['Sprice0',	'Sprice1',	'Sprice2','Sprice3', 'Sprice4']].iloc[:244-test_size+n]
-#   y_train = clean_df["target"].iloc[:244-test_size+n]
-#   X_test = clean_df[['Sprice0',	'Sprice1',	'Sprice2','Sprice3', 'Sprice4']].iloc[244-test_size+n:245-test_size+n]
-#   y_test = clean_df["target"].iloc[244-test_size:245]
-#   return [X_train, y_train, X_test, y_test]
